@@ -130,7 +130,7 @@ nnoremap <C-g> :Rg<CR>
 " ============================
 
 " ========== Fern ==========
-nnoremap <C-n> :Fern . -drawer -reveal=% -toggle <CR>
+nnoremap <silent><C-n> :Fern . -drawer -reveal=% -toggle <CR>
 let g:fern#default_hidden=1
 let g:fern#renderer='nerdfont'
 " ==========================

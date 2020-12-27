@@ -56,4 +56,6 @@ nmap <silent><leader>gr :call LanguageClient#textDocument_rename()<CR>
 nmap <silent>gt :call LanguageClient#textDocument_typeDefinition({'gotoCmd': 'split'})<CR>
 nmap <silent>gr LanguageClient#textDocument_references({'gotoCmd': 'split'})<CR>
 nmap <silent>K <Plug>(lcn-hover)
+nmap <silent>[g <Plug>(lcn-diagnostics-next)
+nmap <silent>]g <Plug>(lcn-diagnostics-previous)
 
