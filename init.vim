@@ -1,7 +1,7 @@
 " DO NOT ERASE!!!
 " runtime for neovim 0.5
-let $VIMRUNTIME=expand("$HOME/works/neovim/runtime")
-set runtimepath+=~/works/neovim/runtime
+let $VIMRUNTIME=expand("$HOME/local/nvim/share/nvim/runtime")
+set runtimepath+=~/local/nvim/share/nvim/runtime
 
 " save clipboard yanked content
 set clipboard+=unnamed,unnamedplus
@@ -48,7 +48,7 @@ Plug 'acarapetis/vim-colors-github'
 
 " enable :XtermColorTable
 Plug 'guns/xterm-color-table.vim'
-Plug 'Yggdroot/indentLine' "visualize indent
+Plug 'nathanaelkane/vim-indent-guides' " visible indent lines
 Plug 'bronson/vim-trailing-whitespace' "highlight unnecessary white-space
 
 " Plug 'prabirshrestha/asyncomplete.vim'
@@ -56,26 +56,31 @@ Plug 'bronson/vim-trailing-whitespace' "highlight unnecessary white-space
 " Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
 " lsp
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-
-" auto complete
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
+" Plug 'autozimu/LanguageClient-neovim', {
+"     \ 'branch': 'next',
+"     \ 'do': 'bash install.sh',
+"     \ }
+"
+" " auto complete
+" if has('nvim')
+"   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" else
+"   Plug 'Shougo/deoplete.nvim'
+"   Plug 'roxma/nvim-yarp'
+"   Plug 'roxma/vim-hug-neovim-rpc'
+" endif
+"
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug 'rust-lang/rust.vim'
+Plug 'reasonml-editor/vim-reason-plus'
+
 Plug 'morhetz/gruvbox'
 
 " git utilities
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
+
 call plug#end()
 
 
@@ -94,14 +99,14 @@ if !($NVIM_GUI)
 endif
 
 " ========== deoplete ==========
-let g:deoplete#enable_at_startup = 1
-set completeopt=menuone
+" let g:deoplete#enable_at_startup = 1
+" set completeopt=menuone
 " ==============================
 
 " ========== fzf ==========
 " fzf mapping
-nnoremap <C-p> :FZFFileList<CR>
-nnoremap <C-b> :Buffers<CR>
+nnoremap <silent><C-p> :FZFFileList<CR>
+nnoremap <silent><C-b> :Buffers<CR>
 command! FZFFileList call fzf#run(fzf#wrap({
             \ 'source': 'find . -type d -name .git -prune -o ! -name .DS_Store'}))
 
@@ -126,7 +131,7 @@ command! -bang -nargs=* Rg
   \   <bang>0)
 
 " mapping :Rg
-nnoremap <C-g> :Rg<CR>
+nnoremap <C-f> :Rg<CR>
 " ============================
 
 " ========== Fern ==========
@@ -147,6 +152,11 @@ let g:neosolarized_italic=1
 let g:neosolarized_termBoldAsBright=1
 " ==================================
 
+" ======= vim-indent-guides ========
+let g:indent_guides_enable_on_vim_startup=1
+let g:indent_guides_guide_size=1
+" ==================================
+
 " read lsp config file
 runtime! lsp_config.vim
 
@@ -160,10 +170,16 @@ nnoremap tL :+tabmove<CR>
 augroup fileTypeIndent
   autocmd!
   autocmd BufNewFile,BufRead *.py setlocal tabstop=4 softtabstop=4 shiftwidth=4
+  autocmd BufNewFile,BufRead *.c setlocal tabstop=2 softtabstop=2 shiftwidth=2
   autocmd BufNewFile,BufRead *.rb setlocal tabstop=2 softtabstop=2 shiftwidth=2
   autocmd BufNewFile,BufRead *.swift setlocal tabstop=4 softtabstop=4 shiftwidth=4
   autocmd BufNewFile,BufRead *.rs setlocal tabstop=4 softtabstop=4 shiftwidth=4
   autocmd BufNewFile,BufRead *.json setlocal tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd BufNewFile,BufRead *.js setlocal tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd BufNewFile,BufRead *.jsx setlocal tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd BufNewFile,BufRead *.ts setlocal tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd BufNewFile,BufRead *.tsx setlocal tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd BufNewFile,BufRead *.elm setlocal tabstop=2 softtabstop=2 shiftwidth=2
 augroup END
 
 " mapleader
@@ -171,3 +187,7 @@ let mapleader=','
 nnoremap <Leader>e :Explore<CR>
 nnoremap <Leader>se :Sexplore<CR>
 nnoremap <Leader>ve :Vexplore<CR>
+
+" ocaml merlin
+let g:opamshare = substitute(system('opam var share'),'\n$','','''')
+     execute "set rtp+=" . g:opamshare . "/merlin/vim"

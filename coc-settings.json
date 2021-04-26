@@ -1,0 +1,31 @@
+{
+  "diagnostic.infoSign": "ℹ",
+  "diagnostic.hintSign": "ℹ",
+  "diagnostic.errorSign": "✘",
+  "diagnostic.warningSign": "⚠",
+  "languageserver": {
+    "ocaml-lsp": {
+      "command": "opam",
+      "args": ["config", "exec", "--", "ocamllsp"],
+      "filetypes": ["ocaml", "reason"]
+    },
+    "typescript": {
+      "command": "typescript-language-server",
+      "args": ["--stdio"],
+      "filetypes": ["typescript", "typescriptreact", "javascript", "javascriptreact"]
+    },
+    "elmLS": {
+      "command": "elm-language-server",
+      "filetypes": ["elm"],
+      "rootPatterns": ["elm.json"]
+    },
+    "python": {
+      "command": "pyls",
+      "filetypes": ["python"]
+    }
+  },
+  // If you use neovim you can enable codelenses with this
+  "codeLens.enable": true,
+  "rust-analyzer.inlayHints.enable": true,
+  "rust-analyzer.server.path": "/home/ak-10/.cargo/bin/rust-analyzer"
+}
